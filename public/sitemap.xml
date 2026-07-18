@@ -46,4 +46,24 @@
   <url><loc>https://toolvers.vercel.app/en/tools/investment-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolvers.vercel.app/en/tools/retirement-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolvers.vercel.app/en/tools/profit-margin-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/vat-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/sales-tax-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/discount-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/tip-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/inflation-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/roi-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/break-even-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/commission-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/salary-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/budget-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/scientific-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/matrix-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/quadratic-equation-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/prime-number-checker</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/lcm-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/gcf-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/standard-deviation-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/mean-median-mode-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/random-number-generator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/roman-numeral-converter</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
