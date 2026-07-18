@@ -66,4 +66,14 @@
   <url><loc>https://toolvers.vercel.app/en/tools/mean-median-mode-calculator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolvers.vercel.app/en/tools/random-number-generator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://toolvers.vercel.app/en/tools/roman-numeral-converter</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/base64-encoder</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/base64-decoder</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/url-encoder</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/url-decoder</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/json-formatter</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/html-formatter</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/css-minifier</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/javascript-minifier</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/color-palette-generator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://toolvers.vercel.app/en/tools/lorem-ipsum-generator</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
