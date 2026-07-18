@@ -1,89 +1,88 @@
-import type { ComponentType } from 'react';
+import type { LucideIcon } from 'lucide-react';
 
 export interface ToolField {
   id: string;
   label: string;
-  type: 'number' | 'text' | 'select' | 'date' | 'textarea' | 'file' | 'range' | 'checkbox';
+  type: 'text' | 'textarea' | 'number' | 'select' | 'checkbox' | 'range' | 'file';
   placeholder?: string;
-  options?: { value: string; label: string }[];
-  defaultValue?: string | number | boolean;
+  defaultValue?: any;
   min?: number;
   max?: number;
   step?: number;
-  accept?: string;
+  options?: { value: string; label: string }[];
   hint?: string;
+  accept?: string;
   multiple?: boolean;
+}
+
+export interface ToolResultDetail {
+  label: string;
+  value: string;
 }
 
 export interface ToolResult {
   title: string;
   value: string;
   summary?: string;
-  details?: { label: string; value: string }[];
+  details?: ToolResultDetail[];
 }
 
 export interface ToolContext {
-  fields: Record<string, string | number | boolean | File | File[] | undefined>;
-  setField: (id: string, value: string | number | boolean | File | File[] | undefined) => void;
+  fields: Record<string, any>;
+  setField: (id: string, value: any) => void;
+}
+
+export interface Faq {
+  question: string;
+  answer: string;
 }
 
 export interface Tool {
   slug: string;
   title: string;
-  shortTitle?: string;
   description: string;
   metaDescription: string;
   category: string;
   keywords: string[];
-  icon: ComponentType<{ className?: string }>;
+  icon: LucideIcon;
   fields: ToolField[];
   calculate: (ctx: ToolContext) => ToolResult | null;
   explanation: string;
-  faqs: { question: string; answer: string }[];
+  faqs: Faq[];
+  custom?: boolean;
   popular?: boolean;
   recentlyAdded?: boolean;
-  /** If true, the tool uses a custom render instead of the default form. */
-  custom?: boolean;
-  customComponent?: ComponentType<ToolContext>;
-  /** Override default result rendering with custom JSX. */
-  renderResult?: (result: ToolResult) => ComponentType | null;
 }
 
-export const toolRegistry: Record<string, Tool> = {};
+const tools: Tool[] = [];
+const toolsBySlug = new Map<string, Tool>();
+const toolsByCategory = new Map<string, Tool[]>();
 
-export function registerTool(tool: Tool) {
-  toolRegistry[tool.slug] = tool;
-}
-
-export function getTool(slug: string): Tool | undefined {
-  return toolRegistry[slug];
+export function registerTool(tool: Tool): void {
+  if (toolsBySlug.has(tool.slug)) return;
+  tools.push(tool);
+  toolsBySlug.set(tool.slug, tool);
+  if (!toolsByCategory.has(tool.category)) toolsByCategory.set(tool.category, []);
+  toolsByCategory.get(tool.category)!.push(tool);
 }
 
 export function getAllTools(): Tool[] {
-  return Object.values(toolRegistry);
+  return tools;
+}
+
+export function getToolBySlug(slug: string): Tool | undefined {
+  return toolsBySlug.get(slug);
 }
 
 export function getToolsByCategory(category: string): Tool[] {
-  return getAllTools().filter((t) => t.category === category);
-}
-
-export function getPopularTools(): Tool[] {
-  return getAllTools().filter((t) => t.popular);
-}
-
-export function getRecentlyAddedTools(): Tool[] {
-  return getAllTools().filter((t) => t.recentlyAdded);
+  return toolsByCategory.get(category) ?? [];
 }
 
 export function searchTools(query: string): Tool[] {
   const q = query.toLowerCase().trim();
   if (!q) return [];
-  return getAllTools().filter((t) => {
-    return (
-      t.title.toLowerCase().includes(q) ||
-      t.description.toLowerCase().includes(q) ||
-      t.keywords.some((k) => k.toLowerCase().includes(q)) ||
-      t.category.toLowerCase().includes(q)
-    );
+  return tools.filter((t) => {
+    const haystack = `${t.title} ${t.description} ${t.keywords.join(' ')} ${t.category}`.toLowerCase();
+    return haystack.includes(q);
   });
 }

@@ -1,21 +1,22 @@
-export function formatNumber(n: number, decimals = 2): string {
-  if (!isFinite(n) || isNaN(n)) return '—';
-  return n.toLocaleString('en-US', {
+export function formatNumber(value: number, decimals = 2): string {
+  if (!isFinite(value)) return '—';
+  return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: decimals,
-  });
+  }).format(value);
 }
 
-export function formatCurrency(n: number, currency = 'USD'): string {
-  if (!isFinite(n) || isNaN(n)) return '—';
-  try {
-    return n.toLocaleString('en-US', { style: 'currency', currency, maximumFractionDigits: 2 });
-  } catch {
-    return `${formatNumber(n, 2)} ${currency}`;
-  }
+export function formatCurrency(value: number): string {
+  if (!isFinite(value)) return '—';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
 }
 
-export function formatPercent(n: number, decimals = 1): string {
-  if (!isFinite(n) || isNaN(n)) return '—';
-  return `${n.toFixed(decimals)}%`;
+export function formatPercent(value: number, decimals = 1): string {
+  if (!isFinite(value)) return '—';
+  return `${formatNumber(value, decimals)}%`;
 }

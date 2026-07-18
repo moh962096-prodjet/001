@@ -1,24 +1,25 @@
-import { Link, localizePath } from '../utils/router';
+import { Link } from 'react-router-dom';
 import type { Tool } from '../data/toolRegistry';
 import { categoryMap } from '../data/categories';
-import { ArrowRight } from 'lucide-react';
 import type { Locale } from '../i18n/config';
+import { localizePath } from '../utils/router';
 
-export default function ToolCard({ tool, locale = 'en' }: { tool: Tool; locale?: Locale }) {
+export default function ToolCard({ tool, locale }: { tool: Tool; locale: Locale }) {
   const cat = categoryMap[tool.category];
   return (
     <Link
       to={localizePath(`/tools/${tool.slug}`, locale)}
-      className="card group flex flex-col p-5"
+      className="group flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-4 transition hover:border-brand-300 hover:shadow-md"
     >
-      <div className="mb-3 flex items-start justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition group-hover:bg-brand-600 group-hover:text-white">
-          {cat && <cat.icon className="h-5 w-5" />}
+      {cat && (
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+          <cat.icon className="h-5 w-5" />
         </div>
-        <ArrowRight className="h-4 w-4 text-slate-300 transition group-hover:translate-x-1 group-hover:text-brand-500" />
+      )}
+      <div className="min-w-0">
+        <h3 className="truncate text-sm font-bold text-slate-900 group-hover:text-brand-600">{tool.title}</h3>
+        <p className="mt-0.5 line-clamp-2 text-xs text-slate-500">{tool.description}</p>
       </div>
-      <h3 className="font-semibold text-slate-900 transition group-hover:text-brand-700">{tool.title}</h3>
-      <p className="mt-1 line-clamp-2 text-sm text-slate-500">{tool.description}</p>
     </Link>
   );
 }

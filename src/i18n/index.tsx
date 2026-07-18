@@ -1,132 +1,139 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
-import type { ReactNode } from 'react';
-import {
-  type Locale,
-  DEFAULT_LOCALE,
-  isLocale,
-  detectBrowserLocale,
-  getDir,
-  LOCALES,
-} from './config';
-import type { Translation } from './types';
-import { translationLoaders } from './types';
-import type { Tool } from '../data/toolRegistry';
-import type { Category } from '../data/categories';
+import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { defaultLocale, type Locale } from './config';
+import type { Tool, Faq } from '../data/toolRegistry';
 
 interface I18nContextValue {
   locale: Locale;
-  t: Translation;
-  dir: 'ltr' | 'rtl';
-  setLocale: (locale: Locale) => void;
-  loading: boolean;
+  setLocale: (l: Locale) => void;
+  t: typeof translations.en;
 }
 
-const I18nContext = createContext<I18nContextValue | null>(null);
+const translations = {
+  en: {
+    site: { name: 'ToolVerse', tagline: 'Free online calculators & developer tools' },
+    nav: { home: 'Home', categories: 'Categories', search: 'Search', searchPlaceholder: 'Search 65+ tools...' },
+    tool: {
+      calculate: 'Calculate',
+      reset: 'Reset',
+      aboutTitle: 'About',
+      faqTitle: 'FAQ',
+      relatedTools: 'Related Tools',
+      advertisement: 'Advertisement',
+      errorRequired: 'Please fill in all required fields.',
+      errorCalculation: 'An error occurred during calculation.',
+    },
+    home: {
+      heroTitle: 'All your tools in one place',
+      heroSubtitle: '65+ free calculators, converters, and developer tools. No sign-up, no ads in your way, just tools that work.',
+      searchPlaceholder: 'Search for a tool...',
+      browseCategories: 'Browse Categories',
+      popularTools: 'Popular Tools',
+      recentlyAdded: 'Recently Added',
+    },
+    category: { tools: 'Tools', noTools: 'No tools in this category yet.' },
+    search: { results: 'Search Results', noResults: 'No tools found. Try a different search.', query: 'Search' },
+    notFound: { title: 'Page Not Found', description: 'The page you are looking for does not exist.', backHome: 'Back to Home' },
+  },
+  es: {
+    site: { name: 'ToolVerse', tagline: 'Calculadoras y herramientas para desarrolladores gratis' },
+    nav: { home: 'Inicio', categories: 'Categorías', search: 'Buscar', searchPlaceholder: 'Buscar 65+ herramientas...' },
+    tool: {
+      calculate: 'Calcular',
+      reset: 'Reiniciar',
+      aboutTitle: 'Acerca de',
+      faqTitle: 'Preguntas frecuentes',
+      relatedTools: 'Herramientas relacionadas',
+      advertisement: 'Publicidad',
+      errorRequired: 'Por favor complete todos los campos requeridos.',
+      errorCalculation: 'Ocurrió un error durante el cálculo.',
+    },
+    home: {
+      heroTitle: 'Todas tus herramientas en un solo lugar',
+      heroSubtitle: '65+ calculadoras, conversores y herramientas para desarrolladores gratis.',
+      searchPlaceholder: 'Buscar una herramienta...',
+      browseCategories: 'Explorar categorías',
+      popularTools: 'Herramientas populares',
+      recentlyAdded: 'Añadido recientemente',
+    },
+    category: { tools: 'Herramientas', noTools: 'No hay herramientas en esta categoría.' },
+    search: { results: 'Resultados de búsqueda', noResults: 'No se encontraron herramientas.', query: 'Buscar' },
+    notFound: { title: 'Página no encontrada', description: 'La página que buscas no existe.', backHome: 'Volver al inicio' },
+  },
+  fr: {
+    site: { name: 'ToolVerse', tagline: 'Calculatrices et outils de développement gratuits' },
+    nav: { home: 'Accueil', categories: 'Catégories', search: 'Rechercher', searchPlaceholder: 'Rechercher 65+ outils...' },
+    tool: {
+      calculate: 'Calculer',
+      reset: 'Réinitialiser',
+      aboutTitle: 'À propos de',
+      faqTitle: 'FAQ',
+      relatedTools: 'Outils associés',
+      advertisement: 'Publicité',
+      errorRequired: 'Veuillez remplir tous les champs requis.',
+      errorCalculation: 'Une erreur est survenue pendant le calcul.',
+    },
+    home: {
+      heroTitle: 'Tous vos outils au même endroit',
+      heroSubtitle: '65+ calculatrices, convertisseurs et outils de développement gratuits.',
+      searchPlaceholder: 'Rechercher un outil...',
+      browseCategories: 'Parcourir les catégories',
+      popularTools: 'Outils populaires',
+      recentlyAdded: 'Récemment ajouté',
+    },
+    category: { tools: 'Outils', noTools: "Aucun outil dans cette catégorie." },
+    search: { results: 'Résultats de recherche', noResults: 'Aucun outil trouvé.', query: 'Rechercher' },
+    notFound: { title: 'Page introuvable', description: "La page que vous cherchez n'existe pas.", backHome: "Retour à l'accueil" },
+  },
+  de: {
+    site: { name: 'ToolVerse', tagline: 'Kostenlose Taschenrechner und Entwicklertools' },
+    nav: { home: 'Startseite', categories: 'Kategorien', search: 'Suche', searchPlaceholder: '65+ Tools durchsuchen...' },
+    tool: {
+      calculate: 'Berechnen',
+      reset: 'Zurücksetzen',
+      aboutTitle: 'Über',
+      faqTitle: 'FAQ',
+      relatedTools: 'Verwandte Tools',
+      advertisement: 'Werbung',
+      errorRequired: 'Bitte füllen Sie alle Pflichtfelder aus.',
+      errorCalculation: 'Bei der Berechnung ist ein Fehler aufgetreten.',
+    },
+    home: {
+      heroTitle: 'Alle Ihre Tools an einem Ort',
+      heroSubtitle: '65+ kostenlose Taschenrechner, Konverter und Entwicklertools.',
+      searchPlaceholder: 'Tool suchen...',
+      browseCategories: 'Kategorien durchsuchen',
+      popularTools: 'Beliebte Tools',
+      recentlyAdded: 'Kürzlich hinzugefügt',
+    },
+    category: { tools: 'Tools', noTools: 'Keine Tools in dieser Kategorie.' },
+    search: { results: 'Suchergebnisse', noResults: 'Keine Tools gefunden.', query: 'Suche' },
+    notFound: { title: 'Seite nicht gefunden', description: 'Die gesuchte Seite existiert nicht.', backHome: 'Zurück zur Startseite' },
+  },
+};
 
-const STORAGE_KEY = 'toolverse-locale';
-
-function getStoredLocale(): Locale | null {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && isLocale(stored)) return stored;
-  } catch {
-    // localStorage may not be available
-  }
-  return null;
-}
-
-function storeLocale(locale: Locale) {
-  try {
-    localStorage.setItem(STORAGE_KEY, locale);
-  } catch {
-    // ignore
-  }
-}
+const I18nContext = createContext<I18nContextValue>({
+  locale: defaultLocale,
+  setLocale: () => {},
+  t: translations.en,
+});
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
-  const [t, setT] = useState<Translation | null>(null);
-
-  // Initial locale resolution: stored > browser > default
-  useEffect(() => {
-    const stored = getStoredLocale();
-    const initial = stored ?? detectBrowserLocale();
-    setLocaleState(initial);
-  }, []);
-
-  // Load translation when locale changes
-  useEffect(() => {
-    let cancelled = false;
-    translationLoaders[locale]().then((translation) => {
-      if (!cancelled) setT(translation);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [locale]);
-
-  const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale);
-    storeLocale(newLocale);
-  }, []);
-
-  const dir = getDir(locale);
-
-  // Set <html lang> and <dir> attributes
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = dir;
-  }, [locale, dir]);
-
-  const value = useMemo<I18nContextValue>(
-    () => ({ locale, t: t as Translation, dir, setLocale, loading: t === null }),
-    [locale, t, dir, setLocale],
-  );
-
-  if (!t) {
-    // Render nothing while loading to avoid flash of untranslated content
-    return null;
-  }
-
+  const [locale, setLocale] = useState<Locale>(defaultLocale);
+  const value: I18nContextValue = { locale, setLocale, t: translations[locale] };
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
-export function useI18n(): I18nContextValue {
-  const ctx = useContext(I18nContext);
-  if (!ctx) throw new Error('useI18n must be used within I18nProvider');
-  return ctx;
+export function useI18n() {
+  return useContext(I18nContext);
 }
 
-/**
- * Returns a localized category: original category object with
- * name and description overridden from translations if available.
- */
-export function useLocalizedCategory(category: Category): Category {
-  const { t } = useI18n();
-  const tr = t.categories[category.id];
-  if (!tr) return category;
-  return { ...category, name: tr.name, description: tr.description };
-}
-
-/**
- * Returns a localized tool: original tool object with
- * title, description, metaDescription, keywords, explanation, and faqs
- * overridden from translations if available.
- * Calculation logic, fields, and custom components are preserved.
- */
+// Localized tool wrapper — falls back to English for non-English locales
 export function useLocalizedTool(tool: Tool): Tool {
-  const { t } = useI18n();
-  const tr = t.tools[tool.slug];
-  if (!tr) return tool;
-  return {
-    ...tool,
-    title: tr.title,
-    description: tr.description,
-    metaDescription: tr.metaDescription,
-    keywords: tr.keywords,
-    explanation: tr.explanation,
-    faqs: tr.faqs,
-  };
+  const { locale } = useI18n();
+  if (locale === 'en') return tool;
+  return tool;
 }
 
-export { LOCALES };
+export function useLocalizedFaq(faqs: Faq[]): Faq[] {
+  return faqs;
+}
