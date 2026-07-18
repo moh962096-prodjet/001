@@ -10,9 +10,9 @@ export interface Route {
   params: Record<string, string>;
 }
 
-function parseHash(): Route {
-  const hash = window.location.hash.replace(/^#/, '') || '/';
-  const [fullPath, queryString] = hash.split('?');
+export function parsePath(): Route {
+  const fullPath = window.location.pathname || '/';
+  const queryString = window.location.search.replace(/^\?/, '');
   const params: Record<string, string> = {};
   if (queryString) {
     new URLSearchParams(queryString).forEach((v, k) => {
@@ -37,22 +37,24 @@ function parseHash(): Route {
 }
 
 export function useRouter() {
-  const [route, setRoute] = useState<Route>(() => parseHash());
+  const [route, setRoute] = useState<Route>(() => parsePath());
 
   useEffect(() => {
     const onChange = () => {
-      setRoute(parseHash());
+      setRoute(parsePath());
       window.scrollTo(0, 0);
     };
-    window.addEventListener('hashchange', onChange);
-    return () => window.removeEventListener('hashchange', onChange);
+    window.addEventListener('popstate', onChange);
+    return () => window.removeEventListener('popstate', onChange);
   }, []);
 
   const navigate = useCallback((to: string) => {
-    window.location.hash = to;
+    window.history.pushState(null, '', to);
+    setRoute(parsePath());
+    window.scrollTo(0, 0);
   }, []);
 
-  return { route, navigate };
+  return { route, navigate, setRoute };
 }
 
 /**
@@ -60,7 +62,7 @@ export function useRouter() {
  * it is returned as-is. Otherwise the current locale is prepended.
  */
 export function useLocalizedNavigate() {
-  const [route] = useState<Route>(() => parseHash());
+  const [route] = useState<Route>(() => parsePath());
 
   const navigateLocalized = useCallback(
     (to: string, locale: Locale = route.locale) => {
@@ -68,11 +70,14 @@ export function useLocalizedNavigate() {
       const cleanPath = to.startsWith('/') ? to : `/${to}`;
       // Check if path already has a locale prefix
       const segments = cleanPath.split('/').filter(Boolean);
+      let target: string;
       if (segments.length > 0 && isLocale(segments[0])) {
-        window.location.hash = cleanPath;
-        return;
+        target = cleanPath;
+      } else {
+        target = `/${locale}${cleanPath === '/' ? '' : cleanPath}`;
       }
-      window.location.hash = `/${locale}${cleanPath === '/' ? '' : cleanPath}`;
+      window.history.pushState(null, '', target);
+      window.dispatchEvent(new PopStateEvent('popstate'));
     },
     [route.locale],
   );
@@ -107,11 +112,15 @@ export function Link({
 } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'onClick'>) {
   return (
     <a
-      href={`#${to}`}
+      href={to}
       className={className}
       onClick={(e) => {
         if (onClick) onClick();
-        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        window.history.pushState(null, '', to);
+        window.dispatchEvent(new PopStateEvent('popstate'));
+        window.scrollTo(0, 0);
       }}
       {...rest}
     >

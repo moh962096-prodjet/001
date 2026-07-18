@@ -34,7 +34,7 @@ function setHreflang(pathWithoutLocale: string) {
     const link = document.createElement('link');
     link.setAttribute('rel', 'alternate');
     link.setAttribute('hreflang', loc.hreflang);
-    link.setAttribute('href', `${SITE_URL}/#${localePath(loc.code, pathWithoutLocale)}`);
+    link.setAttribute('href', `${SITE_URL}${localePath(loc.code, pathWithoutLocale)}`);
     link.setAttribute('data-hreflang', loc.hreflang);
     document.head.appendChild(link);
   }
@@ -42,7 +42,7 @@ function setHreflang(pathWithoutLocale: string) {
   const defaultLink = document.createElement('link');
   defaultLink.setAttribute('rel', 'alternate');
   defaultLink.setAttribute('hreflang', 'x-default');
-  defaultLink.setAttribute('href', `${SITE_URL}/#${localePath(DEFAULT_LOCALE, pathWithoutLocale)}`);
+  defaultLink.setAttribute('href', `${SITE_URL}${localePath(DEFAULT_LOCALE, pathWithoutLocale)}`);
   defaultLink.setAttribute('data-hreflang', 'x-default');
   document.head.appendChild(defaultLink);
 }

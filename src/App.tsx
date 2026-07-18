@@ -1,5 +1,5 @@
 import './data/initTools';
-import { useRouter, Link } from './utils/router';
+import { useRouter, Link, parsePath } from './utils/router';
 import { getTool } from './data/toolRegistry';
 import { categoryMap } from './data/categories';
 import { usePageMeta } from './utils/seo';
@@ -14,21 +14,22 @@ import { isLocale, detectBrowserLocale } from './i18n/config';
 import type { Locale } from './i18n/config';
 
 function AppContent() {
-  const { route } = useRouter();
+  const { route, setRoute } = useRouter();
   const { locale, setLocale } = useI18n();
 
   // Redirect bare paths (without locale prefix) to the detected locale
   useEffect(() => {
-    const hash = window.location.hash.replace(/^#/, '') || '/';
-    const segments = hash.split('/').filter(Boolean);
+    const path = window.location.pathname || '/';
+    const segments = path.split('/').filter(Boolean);
 
     if (segments.length === 0 || !isLocale(segments[0])) {
       // No locale prefix — redirect to detected locale
       const detected = (getStoredLocale() ?? detectBrowserLocale()) as Locale;
       const rest = segments.length > 0 ? '/' + segments.join('/') : '';
       const newPath = `/${detected}${rest}`;
-      window.location.hash = newPath;
+      window.history.replaceState(null, '', newPath);
       setLocale(detected);
+      setRoute(parsePath());
     } else if (segments[0] !== locale) {
       // Sync locale from URL
       setLocale(segments[0] as Locale);
@@ -37,8 +38,8 @@ function AppContent() {
 
   // Keep URL locale in sync when locale changes (e.g. language switcher)
   useEffect(() => {
-    const hash = window.location.hash.replace(/^#/, '') || '/';
-    const segments = hash.split('/').filter(Boolean);
+    const path = window.location.pathname || '/';
+    const segments = path.split('/').filter(Boolean);
     const currentLocaleInUrl = segments.length > 0 && isLocale(segments[0]) ? segments[0] : null;
 
     if (currentLocaleInUrl !== locale) {
@@ -48,7 +49,8 @@ function AppContent() {
           ? '/' + segments.join('/')
           : '';
       const newPath = `/${locale}${rest}`;
-      window.location.hash = newPath;
+      window.history.replaceState(null, '', newPath);
+      setRoute(parsePath());
     }
   }, [locale]);
 

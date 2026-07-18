@@ -1,4 +1,4 @@
-import { localizePath } from '../utils/router';
+import { localizePath, Link } from '../utils/router';
 import { categoryMap, categories } from '../data/categories';
 import { getToolsByCategory } from '../data/toolRegistry';
 import { useCategorySeo, usePageMeta } from '../utils/seo';
@@ -12,12 +12,12 @@ import type { Locale } from '../i18n/config';
 function OtherCategoryLink({ category, locale }: { category: Category; locale: Locale }) {
   const localizedCat = useLocalizedCategory(category);
   return (
-    <a
-      href={`#${localizePath(`/category/${category.id}`, locale)}`}
+    <Link
+      to={localizePath(`/category/${category.id}`, locale)}
       className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-brand-300 hover:text-brand-600"
     >
       {localizedCat.name}
-    </a>
+    </Link>
   );
 }
 

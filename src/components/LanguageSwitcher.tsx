@@ -26,15 +26,17 @@ export default function LanguageSwitcher() {
     setOpen(false);
 
     // Update URL to reflect new locale
-    const hash = window.location.hash.replace(/^#/, '') || '/';
-    const segments = hash.split('/').filter(Boolean);
+    const path = window.location.pathname || '/';
+    const segments = path.split('/').filter(Boolean);
     let rest = '/';
     if (segments.length > 0) {
       const startIdx = LOCALES.some((l) => l.code === segments[0]) ? 1 : 0;
       rest = segments.slice(startIdx).join('/');
       rest = rest ? '/' + rest : '/';
     }
-    window.location.hash = `/${newLocale}${rest === '/' ? '' : rest}`;
+    const newPath = `/${newLocale}${rest === '/' ? '' : rest}`;
+    window.history.pushState(null, '', newPath);
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   return (

@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/favicon.svg", "destination": "/favicon.svg" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/((?!assets|favicon\\.svg|robots\\.txt|sitemap\\.xml).*)", "destination": "/index.html" }
+  ]
+}

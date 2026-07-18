@@ -39,7 +39,8 @@ export default function Header({ onNavigate }: { onNavigate?: () => void }) {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (results.length > 0) {
-      window.location.hash = localizePath(`/tools/${results[0].slug}`, locale);
+      window.history.pushState(null, '', localizePath(`/tools/${results[0].slug}`, locale));
+      window.dispatchEvent(new PopStateEvent('popstate'));
       setQuery('');
       setMobileOpen(false);
       onNavigate?.();
