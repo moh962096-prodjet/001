@@ -9,7 +9,7 @@ function FooterCategoryLink({ category, locale }: { category: Category; locale: 
   const localizedCat = useLocalizedCategory(category);
   return (
     <li>
-      <Link to={localizePath(`/category/${category.id}`, locale)} className="text-sm text-slate-500 transition hover:text-brand-600">
+      <Link to={localizePath(`/category/${category.slug}`, locale)} className="text-sm text-slate-500 transition hover:text-brand-600">
         {localizedCat.name}
       </Link>
     </li>
@@ -39,7 +39,7 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-slate-900">{t.footer.categoriesTitle}</h3>
             <ul className="mt-3 space-y-2">
               {categories.slice(0, 5).map((c) => (
-                <FooterCategoryLink key={c.id} category={c} locale={locale} />
+                <FooterCategoryLink key={c.slug} category={c} locale={locale} />
               ))}
             </ul>
           </div>
@@ -48,7 +48,7 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-slate-900">{t.footer.moreTitle}</h3>
             <ul className="mt-3 space-y-2">
               {categories.slice(5).map((c) => (
-                <FooterCategoryLink key={c.id} category={c} locale={locale} />
+                <FooterCategoryLink key={c.slug} category={c} locale={locale} />
               ))}
             </ul>
           </div>
