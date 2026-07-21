@@ -306,8 +306,7 @@ function AppRoutes() {
           <Route path="/category/:category" element={<CategoryPage />} />
           <Route path="/tools/:slug" element={<ToolRoute />} />
           <Route path="/search" element={<SearchPage />} />
-<Route path="/blog" element={<div className="container-page py-10"><h1 className="text-4xl font-bold">Blog</h1></div>} />
-
+<Route path="/blog" element={<BlogPage />} />
 <Route path="/blog/:slug" element={<ArticlePage />} />
           <Route path="*" element={<NotFoundPage />} />
           {/* Locale-prefixed routes */}
