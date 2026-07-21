@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Globe, ChevronDown } from 'lucide-react';
-import { LOCALES } from '../i18n/config';
+import { locales, localeNames } from '../i18n/config';
 import type { Locale } from '../i18n/config';
 import { useI18n } from '../i18n';
 
@@ -19,7 +19,7 @@ export default function LanguageSwitcher() {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
-  const currentLocale = LOCALES.find((l) => l.code === locale);
+  const currentLocaleName = localeNames[locale];
 
   const selectLocale = (newLocale: Locale) => {
     setLocale(newLocale);
@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
     const segments = path.split('/').filter(Boolean);
     let rest = '/';
     if (segments.length > 0) {
-      const startIdx = LOCALES.some((l) => l.code === segments[0]) ? 1 : 0;
+      const startIdx = locales.includes(segments[0] as Locale) ? 1 : 0;
       rest = segments.slice(startIdx).join('/');
       rest = rest ? '/' + rest : '/';
     }
@@ -47,22 +47,22 @@ export default function LanguageSwitcher() {
         aria-label={t.nav.language}
       >
         <Globe className="h-4 w-4" />
-        <span className="hidden sm:inline">{currentLocale?.label}</span>
+        <span className="hidden sm:inline">{currentLocaleName}</span>
         <ChevronDown className="h-3.5 w-3.5" />
       </button>
 
       {open && (
         <div className="absolute right-0 top-full z-50 mt-2 w-44 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-          {LOCALES.map((loc) => (
+          {locales.map((loc) => (
             <button
-              key={loc.code}
-              onClick={() => selectLocale(loc.code)}
+              key={loc}
+              onClick={() => selectLocale(loc)}
               className={`flex w-full items-center justify-between px-4 py-2.5 text-sm transition hover:bg-brand-50 ${
-                loc.code === locale ? 'font-semibold text-brand-700' : 'text-slate-700'
+                loc === locale ? 'font-semibold text-brand-700' : 'text-slate-700'
               }`}
             >
-              {loc.label}
-              {loc.code === locale && (
+              {localeNames[loc]}
+              {loc === locale && (
                 <span className="text-xs text-brand-600">●</span>
               )}
             </button>
