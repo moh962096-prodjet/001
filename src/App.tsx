@@ -1,4 +1,5 @@
 import ArticlePage from "./pages/ArticlePage";
+import BlogPage from "./pages/BlogPage";
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useParams, Navigate, useLocation, useNavigate, Link } from 'react-router-dom';
 import { I18nProvider, useI18n } from './i18n';
