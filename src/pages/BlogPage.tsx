@@ -1,27 +1,7 @@
 import { Link } from "react-router-dom";
+import { articles } from "../data/articles";
 
 export default function BlogPage() {
-  const articles = [
-    {
-      slug: "best-pdf-tools",
-      title: "Best PDF Tools in 2026",
-      description:
-        "Discover the best free PDF tools to split, merge, compress and convert PDF files.",
-    },
-    {
-      slug: "image-resizer-guide",
-      title: "How to Resize Images Without Losing Quality",
-      description:
-        "Learn how to resize images online while keeping excellent quality.",
-    },
-    {
-      slug: "text-case-converter-guide",
-      title: "Complete Guide to Text Case Converter",
-      description:
-        "Everything you need to know about uppercase, lowercase, title case and more.",
-    },
-  ];
-
   return (
     <div className="container-page py-10">
       <h1 className="text-4xl font-bold mb-8">Blog</h1>
