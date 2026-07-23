@@ -8,3 +8,10 @@ export const localeNames: Record<Locale, string> = {
   fr: 'Français',
   de: 'Deutsch',
 };
+export const DEFAULT_LOCALE = defaultLocale;
+
+export const SUPPORTED_LOCALES = locales;
+
+export function isLocale(value: string): value is Locale {
+  return (SUPPORTED_LOCALES as readonly string[]).includes(value);
+}
