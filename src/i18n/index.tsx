@@ -34,6 +34,15 @@ const translations = {
     search: { results: 'Search Results', noResults: 'No tools found. Try a different search.', query: 'Search' },
     notFound: { title: 'Page Not Found', description: 'The page you are looking for does not exist.', backHome: 'Back to Home' },
   },
+  footer: {
+  about: 'About',
+  categories: 'Categories',
+  legal: 'Legal',
+  privacy: 'Privacy Policy',
+  terms: 'Terms of Service',
+  contact: 'Contact',
+  copyright: 'All rights reserved.'
+},
   es: {
     site: { name: 'ToolVerse', tagline: 'Calculadoras y herramientas para desarrolladores gratis' },
     nav: { home: 'Inicio', categories: 'Categorías', search: 'Buscar', searchPlaceholder: 'Buscar 65+ herramientas...' },
@@ -59,6 +68,15 @@ const translations = {
     search: { results: 'Resultados de búsqueda', noResults: 'No se encontraron herramientas.', query: 'Buscar' },
     notFound: { title: 'Página no encontrada', description: 'La página que buscas no existe.', backHome: 'Volver al inicio' },
   },
+  footer: {
+  about: 'About',
+  categories: 'Categories',
+  legal: 'Legal',
+  privacy: 'Privacy Policy',
+  terms: 'Terms of Service',
+  contact: 'Contact',
+  copyright: 'All rights reserved.'
+},
   fr: {
     site: { name: 'ToolVerse', tagline: 'Calculatrices et outils de développement gratuits' },
     nav: { home: 'Accueil', categories: 'Catégories', search: 'Rechercher', searchPlaceholder: 'Rechercher 65+ outils...' },
@@ -84,6 +102,15 @@ const translations = {
     search: { results: 'Résultats de recherche', noResults: 'Aucun outil trouvé.', query: 'Rechercher' },
     notFound: { title: 'Page introuvable', description: "La page que vous cherchez n'existe pas.", backHome: "Retour à l'accueil" },
   },
+  footer: {
+  about: 'About',
+  categories: 'Categories',
+  legal: 'Legal',
+  privacy: 'Privacy Policy',
+  terms: 'Terms of Service',
+  contact: 'Contact',
+  copyright: 'All rights reserved.'
+},
   de: {
     site: { name: 'ToolVerse', tagline: 'Kostenlose Taschenrechner und Entwicklertools' },
     nav: { home: 'Startseite', categories: 'Kategorien', search: 'Suche', searchPlaceholder: '65+ Tools durchsuchen...' },
@@ -109,6 +136,15 @@ const translations = {
     search: { results: 'Suchergebnisse', noResults: 'Keine Tools gefunden.', query: 'Suche' },
     notFound: { title: 'Seite nicht gefunden', description: 'Die gesuchte Seite existiert nicht.', backHome: 'Zurück zur Startseite' },
   },
+  footer: {
+  about: 'About',
+  categories: 'Categories',
+  legal: 'Legal',
+  privacy: 'Privacy Policy',
+  terms: 'Terms of Service',
+  contact: 'Contact',
+  copyright: 'All rights reserved.'
+},
 };
 
 const I18nContext = createContext<I18nContextValue>({
