@@ -53,7 +53,13 @@ export interface Tool {
   popular?: boolean;
   recentlyAdded?: boolean;
 }
+export function getPopularTools(): Tool[] {
+  return tools.filter(tool => tool.popular);
+}
 
+export function getRecentlyAddedTools(): Tool[] {
+  return tools.filter(tool => tool.recentlyAdded);
+}
 const tools: Tool[] = [];
 const toolsBySlug = new Map<string, Tool>();
 const toolsByCategory = new Map<string, Tool[]>();
