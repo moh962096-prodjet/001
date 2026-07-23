@@ -133,7 +133,17 @@ export function useLocalizedTool(tool: Tool): Tool {
   if (locale === 'en') return tool;
   return tool;
 }
+import type { Category } from "../data/toolRegistry";
 
+export function useLocalizedCategory(category: Category): Category {
+  const { locale } = useI18n();
+
+  if (locale === "en") {
+    return category;
+  }
+
+  return category;
+}
 export function useLocalizedFaq(faqs: Faq[]): Faq[] {
   return faqs;
 }
