@@ -92,10 +92,3 @@ export function searchTools(query: string): Tool[] {
     return haystack.includes(q);
   });
 }
-export function getPopularTools(): Tool[] {
-  return tools.filter((tool) => tool.popular);
-}
-
-export function getRecentlyAddedTools(): Tool[] {
-  return tools.filter((tool) => tool.recentlyAdded);
-}
