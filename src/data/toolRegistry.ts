@@ -53,13 +53,6 @@ export interface Tool {
   popular?: boolean;
   recentlyAdded?: boolean;
 }
-export function getPopularTools(): Tool[] {
-  return tools.filter(tool => tool.popular);
-}
-
-export function getRecentlyAddedTools(): Tool[] {
-  return tools.filter(tool => tool.recentlyAdded);
-}
 const tools: Tool[] = [];
 const toolsBySlug = new Map<string, Tool>();
 const toolsByCategory = new Map<string, Tool[]>();
@@ -91,4 +84,11 @@ export function searchTools(query: string): Tool[] {
     const haystack = `${t.title} ${t.description} ${t.keywords.join(' ')} ${t.category}`.toLowerCase();
     return haystack.includes(q);
   });
+}
+export function getPopularTools(): Tool[] {
+  return tools.filter(tool => tool.popular);
+}
+
+export function getRecentlyAddedTools(): Tool[] {
+  return tools.filter(tool => tool.recentlyAdded);
 }
